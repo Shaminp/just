@@ -1,0 +1,73 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 5  // Maximum number of books
+
+typedef struct {
+    char books[MAX][100];  // Array of book names
+    int top;               // Index of the top element
+} BookStack;
+
+
+void initStack(BookStack* stack) {
+    stack->top = -1;
+}
+
+// Push a book onto the stack
+void push(BookStack* stack, const char* book) {
+    if (stack->top < MAX - 1) {
+        stack->top++;
+        strcpy(stack->books[stack->top], book);
+        printf("Added book: %s\n", book);
+    } else {
+        printf("Stack is full!\n");
+    }
+}
+
+
+void pop(BookStack* stack) {
+    if (stack->top >= 0) {
+        printf("Removed book: %s\n", stack->books[stack->top]);
+        stack->top--;
+    } else {
+        printf("Stack is empty!\n");
+    }
+}
+
+
+void peek(BookStack* stack) {
+    if (stack->top >= 0) {
+        printf("Top book: %s\n", stack->books[stack->top]);
+    } else {
+        printf("Stack is empty!\n");
+    }
+}
+
+
+void display(BookStack* stack) {
+    if (stack->top >= 0) {
+        printf("Books in stack:\n");
+        for (int i = stack->top; i >= 0; i--) {
+            printf("%s\n", stack->books[i]);
+        }
+    } else {
+        printf("Stack is empty!\n");
+    }
+}
+
+int main() {
+    BookStack stack;
+    initStack(&stack);
+
+    push(&stack, "The Great Gatsby");
+    push(&stack, "To Kill a Mockingbird");
+    push(&stack, "1984");
+
+    display(&stack);
+    peek(&stack);
+    
+    pop(&stack);
+    display(&stack);
+    
+    return 0;
+}
